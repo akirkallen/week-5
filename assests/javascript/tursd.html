@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Employee Data Management</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+
+  <script src="https://use.fontawesome.com/fd3fe8c252.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+<div class="jumbotron">
+  <h1><i class="fa fa-address-card" aria-hidden="true"></i>  Employee Data Management</h1>
+</div>
+
+<div class="row">
+  
+  <div class="col-lg-12">
+  <!--results panel-->
+    <div class="panel panel-primary">
+    <div class="panel-heading"><i class="fa fa-address-card" aria-hidden="true"></i> Employee Results</div>
+       <div class="panel-body">
+         
+         </div>
+        </div>
+
+   </div>
+
+
+  <div class="col-lg-12">
+    <!--Search Panel-->
+    <div class="panel panel-primary" class="background-color, #00275f">
+      <div class="panel-heading"><i class="fa fa-address-card" aria-hidden="true"></i>  Add Employee</div>
+        <div class="panel-body">
+           <form role="form">
+              <div class="form-group">
+                  <label id="name">Employee Name:</label>
+                  <input type="text" class="form-control" id="search">
+           
+                  <label id="role">Role</label>
+                  <input class="form-control">
+      
+                  <label id="startDate">Start Date (DD/MM/YY) - ex: 01/01/89</label>
+                  <input class="form-control">
+         
+                   <label id="rate">Monthly Rate</label>
+                   <input class="form-control">
+
+                   <label>Billed</label>
+                   <input class="form-control">
+                </div>
+        
+                <button type="button" class="btn btn-danger">Add</button>
+            </form>
+         </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- Required site information Front End
+- Jumbotron 
+
+<div class="jumbotron">
+  <h1>Hello, world!</h1>
+  <p>...</p>
+  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+</div>
+CSS Grid - One row size 12
+Panel heading 
+Panel container
+Panler body -->
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- LINK TO FIREBASE GOES HERE -->
+  
+
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDOBxIyLEcMVyfQf2Jw6cHuZtbnhzFhTAA",
+    authDomain: "project5-5cc95.firebaseapp.com",
+    databaseURL: "https://project5-5cc95.firebaseio.com",
+    projectId: "project5-5cc95",
+    storageBucket: "project5-5cc95.appspot.com",
+    messagingSenderId: "381929936854"
+  };
+  firebase.initializeApp(config);
+
+
+
+    // Create a variable to reference the database
+    var dataRef = firebase.database();
+
+    // Initial Values
+    var name = "";
+    var rate = "";
+    var startDate = "";
+    var role = "";
+
+    // Capture Button Click
+    $("#btn").on("click", function() {
+      // Don't refresh the page!
+      event.preventDefault();
+
+      // YOUR TASK!!!
+      // Code in the logic for storing and retrieving the most recent user.
+      // Don't forget to provide initial data to your Firebase database.
+      name = $("#name").val().trim();
+      rate = $("#rate").val().trim();
+      role = $("#role").val().trim();
+      startDate = $("#startDate").val().trim();
+
+      dataRef.ref().push({
+        name: name,
+        rate: rate,
+        role: role,
+        startDate: startDate
+      });
+
+    });
+
+    // Firebase watcher + initial loader HINT: .on("value")
+  //  database.ref().on("value", function(snapshot) {
+dataRef.ref().on("child_added", function(childsnapshot){
+      // Log everything that's coming out of snapshot
+     // console.log(snapshot.val());
+      console.log(childsnapshot.val().name);
+      console.log(childsnapshot.val().role);
+      console.log(childsnapshot.val().rate);
+      console.log(childsnapshot.val().startDate);
+
+      
+    })
+
+      // Change the HTML to reflect
+  //    $("#name-display").html(snapshot.val().name);
+    //  $("#email-display").html(snapshot.val().email);
+      //$("#age-display").html(snapshot.val().age);
+     // $(//"#comment-display").html(snapshot.val().comment);
+   // });
+
+
+   // function(errorObject) {
+     // console.log("Errors handled: " + errorObject.code);
+    //};
+  </script>
+</body>
+</html>
+
